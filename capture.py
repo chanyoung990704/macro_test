@@ -1,6 +1,8 @@
 from selenium import webdriver
 import time
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.alert import Alert
+
 
 ######### 자동방지 풀기 위한 프레임워크##################################
 import glob
@@ -115,7 +117,7 @@ driver.execute_script("arguments[0].innerText = arguments[1];", span_element, ne
 button = driver.find_element_by_css_selector('div.s_2_btn button')
 button.click()
 
-#############################################################################
+#######################숙소 선택###########################################
 
 
 
@@ -153,7 +155,7 @@ code_text_form.send_keys(solve_code)
 
 
 ###############################################################
-
+time.sleep(0.3)
 
 #약관 동의 체크박스 선택
 check_box = driver.find_element_by_xpath('//*[@id="arr_01"]')
@@ -167,7 +169,7 @@ reserve_button.click()
 
 time.sleep(0.3)
 
-#예약 신청하기 위해 엔터
-alert = driver.switch_to_alert
-alert.send_keys(Keys.ENTER)
+###########예약 신청하기 위해 엔터##################
+alert = Alert(driver)
 alert.accept()
+######################################################
