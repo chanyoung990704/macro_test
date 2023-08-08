@@ -76,6 +76,10 @@ login_password_input.send_keys(Keys.RETURN)
 
 time.sleep(0.3)
 
+# 팝업 요소 숨기기
+popup = driver.find_element_by_id("enterPopup6665")  # 팝업 요소를 찾는 방법에 따라 수정
+driver.execute_script("arguments[0].style.display = 'none';", popup)
+
 ########################################################
 
 
@@ -96,8 +100,8 @@ calendar_label.click()
 
 
 time.sleep(0.3)
-driver.find_element_by_xpath('//*[@id="forestCalPicker"]/div[1]/div[1]/div/div/div[2]/table/tbody/tr[4]/td[4]/a').click()
-driver.find_element_by_xpath('//*[@id="forestCalPicker"]/div[1]/div[1]/div/div/div[2]/table/tbody/tr[4]/td[5]/a').click()
+driver.find_element_by_xpath('//*[@id="forestCalPicker"]/div[1]/div[1]/div/div/div[2]/table/tbody/tr[2]/td[4]/a').click()
+driver.find_element_by_xpath('//*[@id="forestCalPicker"]/div[1]/div[1]/div/div/div[2]/table/tbody/tr[2]/td[5]/a').click()
 
 # 날짜 선택 버튼 클릭
 date_button = driver.find_element_by_css_selector('div.cal_button a.defBtn')
@@ -119,14 +123,21 @@ button.click()
 
 #######################숙소 선택###########################################
 
+time.sleep(0.3)
 
+goods_list_area = driver.find_element_by_class_name("goods_list_area")
+list_boxes = goods_list_area.find_elements_by_class_name("list_box")
 
+for box in list_boxes:
+    room_type = box.find_element_by_class_name("opt2").text
+    if(room_type.startswith("10/10인실")):
+        box.click()
+        break
 
 
 
 ########################자동예약방지 ########################################
 
-time.sleep(0.3)
 
 captcha_img = driver.find_element_by_xpath('//*[@id="captchaImg"]')
 cap_div = driver.find_element_by_xpath('//*[@id="txt"]/div[1]/div[2]/div[2]')
@@ -170,6 +181,6 @@ reserve_button.click()
 time.sleep(0.3)
 
 ###########예약 신청하기 위해 엔터##################
-alert = Alert(driver)
-alert.accept()
+###alert = Alert(driver)
+###alert.accept()
 ######################################################
