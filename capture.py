@@ -142,6 +142,10 @@ if time_to_wait > 0:
 button = driver.find_element_by_css_selector('div.s_2_btn button')
 button.click()
 
+######################대기열 방지 wait######################################
+
+driver.implicitly_wait(300)
+
 #######################자동 예약 방지###########################################
 
 time.sleep(0.3)
@@ -153,16 +157,6 @@ cap_div = driver.find_element_by_xpath('//*[@id="txt"]/div[1]/div[2]/div[2]')
 driver.execute_script("arguments[0].scrollIntoView();", cap_div)
 
 
-##cnt = 0
-
-# 100장의 샘플데이터 얻기
-##while cnt <= 100:
-##    refresh_button = driver.find_element_by_xpath('//*[@id="txt"]/div[1]/div[2]/div[2]/div[1]/div[1]/div[3]/a[1]')
-##    refresh_button.click()
-##    time.sleep(0.3)
-##    captcha_img.screenshot(f"./sample/code{cnt}.png")
-##    cnt += 1
-
 # 스크린샷 찍기
 captcha_img.screenshot('./isT.png')
 #스크린샷 해독
@@ -173,12 +167,7 @@ code_text_form = driver.find_element_by_id('atmtcRsrvtPrvntChrct')
 code_text_form.send_keys(solve_code)
 
 
-
-
-
 ###############################################################
-
-
 
 
 #약관 동의 체크박스 선택
