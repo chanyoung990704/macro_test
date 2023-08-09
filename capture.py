@@ -2,6 +2,8 @@ from selenium import webdriver
 import time
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
+from datetime import datetime, timedelta
+
 
 
 ######### 자동방지 풀기 위한 프레임워크##################################
@@ -114,7 +116,26 @@ new_value = '10'
 span_element = driver.find_element_by_id('stng_nofpr')
 driver.execute_script("arguments[0].innerText = arguments[1];", span_element, new_value)
 
-#######################################################################################
+#########################시간 타이머##################################################
+
+# 현재 시간 초로 변환
+current_time = int(time.time())
+
+# 목표 시간 설정 (예: 15시 30분)
+target_hour = 21
+target_minute = 33
+
+# 현재 날짜와 목표 시간을 이용하여 datetime 객체 생성
+current_datetime = datetime.fromtimestamp(current_time)
+target_datetime = current_datetime.replace(hour=target_hour, minute=target_minute, second=0)
+
+# 대기할 시간 계산
+time_to_wait = (target_datetime - current_datetime).total_seconds()
+if time_to_wait > 0:
+    time.sleep(time_to_wait)
+
+
+#####################################################################################
 
 
 # 조회버튼 클릭
