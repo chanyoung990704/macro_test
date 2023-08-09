@@ -14,7 +14,7 @@ def result_img():
     img_height = 35 #타켓 이미지 높이
     img_length = 6  #타켓 이미지가 포함한 문자 수
     img_char = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}   #타켓 이미지안에 포함된 문자들
-    weights_path = './test_weights.h5' #학습 결과 가중치 경로
+    weights_path = './test_weights2.h5' #학습 결과 가중치 경로
     AM = cc.ApplyModel(weights_path, img_width, img_height, img_length, img_char)   #결과 가중치를 가지는 모델 생성
     pred = AM.predict(target_img_path)  #결과 도출
     return pred
@@ -121,29 +121,16 @@ driver.execute_script("arguments[0].innerText = arguments[1];", span_element, ne
 button = driver.find_element_by_css_selector('div.s_2_btn button')
 button.click()
 
-#######################숙소 선택###########################################
+#######################자동 예약 방지###########################################
 
 time.sleep(0.3)
 
-goods_list_area = driver.find_element_by_class_name("goods_list_area")
-list_boxes = goods_list_area.find_elements_by_class_name("list_box")
-
-for box in list_boxes:
-    room_type = box.find_element_by_class_name("opt2").text
-    if(room_type.startswith("10/10인실")):
-        box.click()
-        break
-
-
-
-########################자동예약방지 ########################################
-
-
-captcha_img = driver.find_element_by_xpath('//*[@id="captchaImg"]')
+captcha_img = driver.find_element_by_id("captchaImg")
 cap_div = driver.find_element_by_xpath('//*[@id="txt"]/div[1]/div[2]/div[2]')
 
 # 요소 위치로 스크롤 이동
-driver.execute_script("arguments[0].scrollIntoView();", captcha_img)
+driver.execute_script("arguments[0].scrollIntoView();", cap_div)
+
 
 ##cnt = 0
 
@@ -165,17 +152,38 @@ code_text_form = driver.find_element_by_id('atmtcRsrvtPrvntChrct')
 code_text_form.send_keys(solve_code)
 
 
+
+
+
 ###############################################################
-time.sleep(0.3)
+
+
+
 
 #약관 동의 체크박스 선택
 check_box = driver.find_element_by_xpath('//*[@id="arr_01"]')
 check_box.click()
 
 
-#예약 버튼 클릭
-reserve_button = driver.find_element_by_xpath('//*[@id="btnRsrvt"]')
-reserve_button.click()
+
+#########################숙소 선택################################
+
+goods_list_area = driver.find_element_by_class_name("goods_list_area")
+list_boxes = goods_list_area.find_elements_by_class_name("list_box")
+
+for box in list_boxes:
+    room_type = box.find_element_by_class_name("opt2").text
+    if(room_type.startswith("20/20인실")):
+        box.click()
+        break
+
+
+
+################################################################
+
+
+#예약 버튼
+driver.execute_script("fn_clickRsrvtRqest();")
 
 
 time.sleep(0.3)

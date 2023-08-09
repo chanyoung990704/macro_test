@@ -7,7 +7,7 @@ def learn_img():
     img_width = 130 #이미지 넓이
     img_height = 35 #이미지 높이
     CM = cc.CreateModel(img_path_list, img_width, img_height)   #학습모델 생성
-    model = CM.train_model(epochs=130)  #반복 학습 시작
+    model = CM.train_model(epochs=200)  #반복 학습 시작
     model.save_weights('./test_weights2.h5')    #학습 결과 가중치 저장
     
     
